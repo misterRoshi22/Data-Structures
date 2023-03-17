@@ -171,7 +171,7 @@ public:
 			while (it != index - 1) {
 				curr = curr->next;
 				it++;
-			}
+			} 
 			new_node->next = (curr->next);
 			curr->next = new_node;
 			size++;
@@ -233,6 +233,45 @@ public:
 			curr = next;
 		}
 		head = prev;
+	}
+
+	T min() const {
+		T MIN = head->data;
+		Node<T>* curr = head;
+		while (curr != nullptr) {
+			if (curr->data < MIN) MIN = curr->data;
+			curr = curr->next;
+		}
+		return MIN;
+	}
+
+	T max() const {
+		T MAX = head->data;
+		Node<T>* curr = head;
+		while (curr != nullptr) {
+			if (curr->data > MAX) MAX = curr->data;
+			curr = curr->next;
+		}
+		return MAX;
+	}
+
+	void sort() {
+		int n = this->size ;
+
+		while (n--){ 
+			Node<T>* curr = head;
+			T MIN = head->data;
+			int index = 0;
+			for (int i = 0; i <= n; i++) {
+				if (curr->data < MIN) {
+					index = i;
+					MIN = curr->data;
+				}
+				curr = curr->next;
+			}
+			pop_at(index);
+			push_tail(MIN);
+		}
 	}
 
 	void operator+=(T data) {
