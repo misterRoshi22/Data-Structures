@@ -96,6 +96,16 @@ public:
 		size++;
 	}
 
+	void push_tail(T data) {
+		if (size == 0) push_head(data);
+		else {
+			Node<T>* new_node = new Node<T>(data, nullptr);
+			tail->next = new_node;
+			tail = new_node;
+		}
+		size++;
+	}
+
 	void pop_head() {
 		if (is_empty()) return;
 
@@ -146,6 +156,25 @@ public:
 		size--;
 	}
 
+	void push_at(unsigned int index, T data) {
+		if (index > size || index < 0) return;
+
+		if (index == 0) push_head(data);
+		else if (index == size) push_tail(data);
+		else {
+			Node<T>* new_node = new Node<T>(data, nullptr);
+			Node<T>* curr = head;
+			int it = 0;
+			while (it != index - 1) {
+				curr = curr->next;
+				it++;
+			}
+			new_node->next = (curr->next);
+			curr->next = new_node;
+		}
+		size++;
+	}
+
 	int find(T data) const {
 		if (is_empty()) return -1;
 		Node<T>* curr = head;
@@ -166,7 +195,7 @@ public:
 
 		int it = 0;
 		while (it < size) {
-			if (curr->data == data) indices->push_head(it);
+			if (curr->data == data) indices->push_tail(it);
 			curr = curr->next, it++;
 		}
 		return *indices;
@@ -179,6 +208,7 @@ public:
 	}
 
 	void reverse() {
+	
 		Node<T>* prev = nullptr;
 		Node<T>* curr = head;
 		Node<T>* next;
