@@ -19,6 +19,7 @@ private:
 	Node<T>* head;
 	Node<T>* tail;
 	unsigned int size;
+
 public:
 	SLL() {
 		head = nullptr;
@@ -51,7 +52,7 @@ public:
 	}
 
 	bool is_empty() const {
-		return head == nullptr;
+		return size == 0;
 	}
 
 	T get_head() const {
@@ -97,7 +98,10 @@ public:
 	}
 
 	void push_tail(T data) {
-		if (size == 0) push_head(data);
+		if (size == 0) {
+			push_head(data);
+			return;
+		}
 		else {
 			Node<T>* new_node = new Node<T>(data, nullptr);
 			tail->next = new_node;
@@ -133,7 +137,6 @@ public:
 			tail = STL;
 			size--;
 		}
-
 	}
 
 	void pop_at(unsigned int index) {
@@ -152,8 +155,8 @@ public:
 			}
 			prev->next = curr->next;
 			delete curr;
+			size--;
 		}
-		size--;
 	}
 
 	void push_at(unsigned int index, T data) {
@@ -171,8 +174,17 @@ public:
 			}
 			new_node->next = (curr->next);
 			curr->next = new_node;
+			size++;
+
 		}
-		size++;
+	}
+	
+	void assign(T arr[], int size) {
+		this->clear();
+
+		for (int i = 0; i < size; i++) {
+			this->push_tail(arr[i]);
+		}
 	}
 
 	int find(T data) const {
@@ -222,4 +234,9 @@ public:
 		}
 		head = prev;
 	}
+
+	void operator+=(T data) {
+		push_tail(data);
+	}
+	
 };
