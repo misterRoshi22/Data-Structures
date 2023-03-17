@@ -177,4 +177,19 @@ public:
 			this->pop_head();
 		}
 	}
+
+	void reverse() {
+		Node<T>* prev = nullptr;
+		Node<T>* curr = head;
+		Node<T>* next;
+		tail = head;
+
+		while (curr != nullptr) {
+			next = curr->next;
+			curr->next = prev;
+			prev = curr;
+			curr = next;
+		}
+		head = prev;
+	}
 };
